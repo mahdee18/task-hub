@@ -1,10 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import GoogleLogin from "../components/Login-Registration/GoogleLogin";
-// import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
+import GoogleLogin from "../../components/GoogleLogin";
 
 const Login = () => {
-//   const { signIn, user } = useAuth();
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,11 +22,11 @@ const Login = () => {
     await signIn(email, password);
   };
 
-//   useEffect(() => {
-//     if (user) {
-//       navigate(from, { replace: true });
-//     }
-//   }, [user, from, navigate]);
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, from, navigate]);
 
   return (
     <form onSubmit={handleSUbmit} className="hero min-h-screen bg-base-200">
@@ -74,7 +74,7 @@ const Login = () => {
               />
             </div>
             <div className="mt-6">
-              {/* <GoogleLogin /> */}
+              <GoogleLogin />
             </div>
             <div className="mt-6">
               <p>

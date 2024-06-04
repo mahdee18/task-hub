@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const routes = [
     { name: "Home", href: "/", isActive: true },
-    { name: "Services", href: "/services", isActive: false },
+    // { name: "Services", href: "/services", isActive: false },
     { name: "Dashboard", href: "/dashboard", isActive: false },
 ];
 
@@ -27,17 +28,34 @@ const NavMenu = ({ routes }) => (
 NavMenu.propTypes = {
     routes: PropTypes.array.isRequired,
 };
+const AuthNavMenu = () => {
+    const { user, logout } = useAuth();
 
-const AuthNavMenu = () => (
-    <>
-        <li>
-            <Link to="/login" className="border border-blue-600 bg-blue-600 text-white hover:bg-opacity-90 py-1.5 px-4 rounded">
-                Login
-            </Link>
-        </li>
-
-    </>
-);
+    return (
+        <>
+            {!user ? (
+                <li className="navbar-end space-x-2">
+                    <button
+                        className="btn bg-red-500 text-white hidden lg:block"
+                    >
+                        <Link to={'/login'}>
+                            Login
+                        </Link>
+                    </button>
+                </li>
+            ) : (
+                <li className="navbar-end space-x-2">
+                    <button
+                        onClick={logout}
+                        className="btn bg-red-500 text-white hidden lg:block"
+                    >
+                        Logout
+                    </button>
+                </li>
+            )}
+        </>
+    );
+};
 
 export const Navigation2 = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,7 +70,7 @@ export const Navigation2 = () => {
                 <div className="container px-4">
                     <div className="flex justify-between items-center">
                         <a className="font-black text-3xl" href="#!">
-                            Easy Frontend
+                            Task Hub
                         </a>
                         <button
                             className="block lg:hidden cursor-pointer h-10 z-20"
